@@ -17,16 +17,16 @@ MD %log%
 
 Setlocal
 	:: Get windows Version numbers and set to _version var
-		For /f "tokens=2 delims=[]" %%G in ('ver') Do (set _version=%%G) 
+		For /f "tokens=2 delims=[]" %%G in ('ver') Do (set _version=%%G)
 	::Breaks up the Version numbers into three parts _major _minor and _build
-		For /f "tokens=2,3,4 delims=. " %%G in ('echo %_version%') Do (set _major=%%G& set _minor=%%H& set _build=%%I) 
+		For /f "tokens=2,3,4 delims=. " %%G in ('echo %_version%') Do (set _major=%%G& set _minor=%%H& set _build=%%I)
 	::Displays the version numbers on screen
 		Echo Major version: %_major%  Minor Version: %_minor%.%_build% >%log%\UserInfo.txt
 	::Checks the vernumbers and runs the custom command for each version.
 		if "%_major%"=="5" goto sub5
 		if "%_major%"=="6" goto sub6
 
-		Echo unsupported version 
+		Echo unsupported version
 		goto:next
 
 	:sub5
@@ -37,12 +37,12 @@ Setlocal
 		set videos=%docs%\My Videos
 		set pictures=%docs%\My Pictures
 		echo XP
-		 
+
 		goto:next
 
 	:sub_2003
 		Echo Windows 2003 or XP 64 bit [%PROCESSOR_ARCHITECTURE%]
-		 
+
 		goto:next
 
 	:sub6
@@ -52,7 +52,7 @@ Setlocal
 		set videos=%userprfile%\Videos
 		set pictures=%userprfile%\Pictures
 		Echo Windows Vista or Windows 2008 [%PROCESSOR_ARCHITECTURE%]
-		 
+
 		goto:next
 
 	:sub7
@@ -61,7 +61,7 @@ Setlocal
 		set videos=%userprfile%\Videos
 		set pictures=%userprfile%\Pictures
 		echo 7
-		 
+
 		goto:next
 	::Get Windows Version Numbers
 
@@ -118,7 +118,7 @@ xcopy "%pictures%" ".\%uf%\My Documents\My Pictures" %switches% >>%data% 2>>%err
 echo Pictures Done.
 ::Pictures
 
-FOR /F "skip=136 tokens=* delims=" %%i in (Backupv1.7.bat) do echo %%i>>%uf%\Restore.bat
+FOR /F "skip=125 tokens=* delims=" %%i in (Backup.bat) do echo %%i>>%uf%\Restore.bat
 :: FOR copies the restore file to the backup directory. The next line skipps to the end of file so that the Restore does not run at the time of backup.
 goto :eof
 ::Restore File below this point
@@ -130,17 +130,17 @@ goto :eof
 	set error=%log%\errors.txt
 	set restore=%log%\data.txt
 	mkdir %log%
-	
+
 		Setlocal
 :: Get windows Version numbers and set to _version var
-		For /f "tokens=2 delims=[]" %%G in ('ver') Do (set _version=%%G) 
+		For /f "tokens=2 delims=[]" %%G in ('ver') Do (set _version=%%G)
 ::Breaks up the Version numbers into three parts _major _minor and _build
-		For /f "tokens=2,3,4 delims=. " %%G in ('echo %_version%') Do (set _major=%%G& set _minor=%%H& set _build=%%I) 
+		For /f "tokens=2,3,4 delims=. " %%G in ('echo %_version%') Do (set _major=%%G& set _minor=%%H& set _build=%%I)
 ::Checks the vernumbers and runs the custom command for each version.
 		if "%_major%"=="5" goto sub5
 		if "%_major%"=="6" goto sub6
 
-		Echo unsupported version 
+		Echo unsupported version
 		goto:next
 
 	:sub5
@@ -151,13 +151,13 @@ goto :eof
 		set videos=%docs%\My Videos
 		set pictures=%docs%\My Pictures
 		echo XP
-		 
+
 		goto:next
 
 	:sub_2003
 ::Windows 2003 or XP 64 Bit
 		Echo Windows 2003 or XP 64 bit [%PROCESSOR_ARCHITECTURE%]
-		 
+
 		goto:next
 
 	:sub6
@@ -168,7 +168,7 @@ goto :eof
 		set music=Music
 		set videos=Videos
 		set pictures=Pictures
-		 
+
 		goto:next
 
 	:sub7
@@ -178,7 +178,7 @@ goto :eof
 		set music=Music
 		set videos=Videos
 		set pictures=Pictures
-		 
+
 		goto:next
 ::Get Windows Version Numbers
 
@@ -193,11 +193,9 @@ xcopy Desktop "%userprofile%\Desktop" %switches% >>%restore% 2>>%error%
 @echo Desktop >>"%restore%"
 echo Desktop Done
 
-
 xcopy Favorites "%userprofile%\Favorites" %switches% >>%restore% 2>>%error%
 @echo Favorites >>"%restore%"
 echo Favorites Done
-
 
 xcopy "My Documents" "%docs%" %switches%  /Exclude:Exclude.txt >>%restore% 2>>%error%
 @echo Documents >>"%restore%"
@@ -210,7 +208,6 @@ echo Music Done
 xcopy "My Documents\My Videos" "%userprofile%\%videos%" %switches% >>%restore% 2>>%error%
 @echo Videos >>"%restore%"
 echo My Videos Done
-
 
 xcopy "My Documents\My Pictures" "%userprofile%\%pictures%" %switches% >>%restore% 2>>%error%
 @echo Pictures >>"%restore%"
